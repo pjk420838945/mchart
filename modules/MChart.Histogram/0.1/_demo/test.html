@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+<head>
+<meta charset=utf-8 />
+<title>Open JQuery Components Library - suches</title>
+    <style>
+        body{
+            margin: 20px 40px;
+        }
+
+        .defDl > dd{
+            border-bottom:1px solid #e2e3ea; 
+        }
+
+        canvas {
+            background: #fff;
+        }
+
+    </style>
+    <script src="../../../../lib.js"></script>
+    <script src="../../../../config.js"></script>
+    <script>
+        JC.debug = true;
+
+        requirejs( [ 'MChart.Histogram', 'Json2' ], function() {
+        });
+    </script>
+</head>    
+<body>
+
+    <dl class="defDl">
+        <dt>
+            <h2>MChart.Histogram 示例</h2>
+        </dt>
+        <dd>
+            <div class="mchart-histogram"
+                chartHeight="400"
+                chartWidth="600"
+                chartScriptData="/script"
+                >
+                <script type="text/template">
+                    {
+                        title: {
+                            text: 'MChart Title'
+                        }
+                        , subtitle: {
+                            text: 'MChart subTitle'
+                        } 
+                        , xAxis: {
+                            categories: [ '111111', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '122222' ]
+                            , partWidth: 80
+                        } 
+                        , yAxis: {
+                            title: {
+                                text: 'MChart vtitle'
+                            }
+                        }
+                        , series:[{
+                            name: 'Temperature'
+                            , data: [10, 0, 3, 10, 20, 27, 28, 32, 30, 25, 15, 5]
+                        }, {
+                            name: 'Rainfall'
+                            , data: [-20, 21, 20, 100, 200, 210, 220, 100, 20, 10, 20, 10]
+                        }]
+                        , credits: {
+                            enabled: true
+                            , text: 'jchart.openjavascript.org'
+                            , href: 'http://jchart.openjavascript.org/'
+                        }
+                        , tips: {
+                            enabled: true
+                        }
+                        , group: {
+                            enabled: true
+                            , isLoop: true
+                            , background: [
+                                {
+                                    title: ''
+                                    , startIndex: 0
+                                    , num: 1
+                                    , color: '#f7f7f7'
+                                }
+                                , {
+                                    title: ''
+                                    , num: 1
+                                    , color: '#dddddd'
+                                }
+                            ]
+                            , selectedStyle: {
+                                color: '#ffa9a9'
+                            }
+                        }
+                        , legend: {
+                            enabled: true
+                        }
+                        , animation: {
+                            enabled: true
+                        }
+                    }
+                </script>
+            </div>
+        </dd>
+    </dl>
+</body>
+</html>
+
+

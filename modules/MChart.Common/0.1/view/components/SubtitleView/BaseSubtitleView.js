@@ -21,24 +21,25 @@
 		        this.addEventListener( MChart.NotificationNames.SHOW_CHART, this.draw );
 		    }
 
-		    , update: function( e, _data ) {
+		    , update: function( _evt, _data ) {
 
-		    	var _c = this.coordinate();
+		    	var _option = $.extend( true, MChart.DefaultOptions.subtitle, _data.subtitle || {} );
 
-                if( _data && _data.subtitle && _data.subtitle.text ) {
+		    	if( !this.enbaledCheck( _option ) ) {
+		    		return;
+		    	}
 
-	                var _titleStyle = $.extend( _data.subtitle.style || {}, MChart.DefaultOptions.subtitle.style, true );
+                var _titleStyle = _option.style;
 
-	                this.displayObj = new createjs.Text( 
-	                    _data.subtitle.text
-	                    , _titleStyle.font
-	                    , _titleStyle.color
-	                );
-	                
-	                this.displayObj.textAlign = "center";
+                this.displayObj = new createjs.Text( 
+                    _data.subtitle.text
+                    , _titleStyle.font
+                    , _titleStyle.color
+                );
+                
+                this.displayObj.textAlign = _titleStyle.align;
 
-	                this.stage().addChild( this.displayObj );
-	            }
+                this.stage().addChild( this.displayObj );
 		    }
 
 		    , draw: function() {
@@ -50,6 +51,16 @@
 	                _displayObj.x = _c.subtitle.x;
 	                _displayObj.y = _c.subtitle.y;
 	            }
+		    }
+
+		    , enbaledCheck: function( _option ) {
+		    	var _enbaled = true;
+
+		    	if( !_option.enabled || _option.text == '' ) {
+		    		_enbaled = false;
+		    	}
+
+		    	return _enbaled;
 		    }
     	}
     );

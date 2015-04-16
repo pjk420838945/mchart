@@ -23,6 +23,12 @@
 
 		    , update: function( e, _data ) {
 
+		    	var _option = $.extend( true, MChart.DefaultOptions.xAxis, _data.xAxis || {} );
+
+		    	if( !this.enbaledCheck( _option ) ) {
+		    		return;
+		    	}
+
 		    	var _p = this
 		    		, _c = this.coordinate()
 	                , _tmpLabel
@@ -30,35 +36,34 @@
 	                , _labelArray = []
 	                , _arrawArray = []
 	                , _innerView = _p.canvas.innerView
-	                , _tmpGraphics = new createjs.Graphics().setStrokeStyle( 1, 'round', 'round' ).beginStroke( '#999' );
+	                , _labelStyle = _option.labels.style
+	                , _lineStyle = _option.line.style
+	                , _tmpGraphics = new createjs.Graphics()
+                		.setStrokeStyle( _lineStyle.lineWidth, 'round', 'round' )
+                		.beginStroke( _lineStyle.color );
 
-                if( _data && _data.xAxis && _data.xAxis.categories ) {
+                $.each( _data.xAxis.categories, function( _idx, _text ) {
+                	_tmpLabel = new createjs.Text( 
+	                    _text
+	                    , _labelStyle.font
+	                    , _labelStyle.color
+	                );
 
-	                var _style = $.extend( ( _data.xAxis.labels ? _data.xAxis.labels.style || {} : {} ), MChart.DefaultOptions.xAxis.labels.style, true );
+	                _tmpLabel.mouseEnabled = false;
 
-	                $.each( _data.xAxis.categories, function( _idx, _text ) {
-	                	_tmpLabel = new createjs.Text( 
-		                    _text
-		                    , _style.font
-		                    , _style.color
-		                );
+	                _tmpLabel.textAlign = _labelStyle.align;
 
-		                _tmpLabel.mouseEnabled = false;
+                	_labelArray.push( _tmpLabel );
+                	_innerView.addChild( _tmpLabel );
 
-		                _tmpLabel.textAlign = 'center';
+                	_tmpArraw = new createjs.Shape( _tmpGraphics.clone() );
 
-	                	_labelArray.push( _tmpLabel );
-	                	_innerView.addChild( _tmpLabel );
+	                _arrawArray.push( _tmpArraw );
+	                _innerView.addChild( _tmpArraw );
+                } );
 
-	                	_tmpArraw = new createjs.Shape( _tmpGraphics.clone() );
-
-		                _arrawArray.push( _tmpArraw );
-		                _innerView.addChild( _tmpArraw );
-	                } );
-
-	                this.displayObj = _labelArray;
-	                this.arrawArray = _arrawArray;
-	            }
+                this.displayObj = _labelArray;
+                this.arrawArray = _arrawArray;
 		    }
 
 		    , draw: function() {
@@ -85,6 +90,10 @@
 		    		} );
 		    		
 		    	}
+		    }
+
+		    , enbaledCheck: function( _option ) {
+		    	return _option.enabled ? _option.labels.enabled : false;
 		    }
 
 		    , labelMaxWidth: function() {

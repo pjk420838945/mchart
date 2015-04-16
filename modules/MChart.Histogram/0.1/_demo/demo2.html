@@ -2,18 +2,24 @@
 <html>
 <head>
 <meta charset=utf-8 />
+<meta name="viewport" content="width=device-width, user-scalable=no">
 <title>Open JQuery Components Library - suches</title>
     <style>
         body{
-            margin: 20px 40px;
+            margin: 0;
+            height: 1000px;
         }
 
         .defDl > dd{
-            border-bottom:1px solid #e2e3ea; 
+            margin-left: 0;
+            border-bottom:1px solid #e2e3ea;
         }
 
         canvas {
+            margin: 0 auto;
             background: #fff;
+            width: 360px;
+            height: 480px;
         }
 
     </style>
@@ -34,10 +40,8 @@
         </dt>
         <dd>
             <div class="mchart-histogram"
-                chartHeight="400"
-                chartWidth="600"
                 chartScriptData="/script"
-                >
+            >
                 <script type="text/template">
                     {
                         title: {
@@ -64,8 +68,8 @@
                         }]
                         , credits: {
                             enabled: true
-                            , text: 'jchart.openjavascript.org'
-                            , href: 'http://jchart.openjavascript.org/'
+                            , text: 'mchart.openjavascript.org'
+                            , href: 'http://mchart.openjavascript.org/'
                         }
                         , tips: {
                             enabled: true
@@ -100,6 +104,7 @@
                 </script>
             </div>
         </dd>
+
     </dl>
 </body>
 </html>

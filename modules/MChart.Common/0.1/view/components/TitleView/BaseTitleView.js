@@ -11,7 +11,7 @@
 		     * @override 
 		     * 初始化UserForm实例. 
 		     */  
-		    initialize: function( _canvas ) {  
+		    initialize: function( _canvas ) {
 		        //调用父类中的initialize函数  
 		        BaseTitleView.$super.initialize.call( this );
 
@@ -23,22 +23,23 @@
 
 		    , update: function( e, _data ) {
 
-		    	var _c = this.coordinate();
+		    	var _option = $.extend( true, MChart.DefaultOptions.title, _data.title || {} );
 
-                if( _data && _data.title && _data.title.text ) {
+		    	if( !this.enbaledCheck( _option ) ) {
+		    		return;
+		    	}
 
-	                var _titleStyle = $.extend( _data.title.style || {}, MChart.DefaultOptions.title.style, true );
+                var _titleStyle = _option.style;
 
-	                this.displayObj = new createjs.Text( 
-	                    _data.title.text
-	                    , _titleStyle.font
-	                    , _titleStyle.color
-	                );
-	                
-	                this.displayObj.textAlign = 'center';
+                this.displayObj = new createjs.Text( 
+                    _data.title.text
+                    , _titleStyle.font
+                    , _titleStyle.color
+                );
+                
+                this.displayObj.textAlign = _titleStyle.align;
 
-	                this.stage().addChild( this.displayObj );
-	            }
+                this.stage().addChild( this.displayObj );
 		    }
 
 		    , draw: function() {
@@ -50,6 +51,16 @@
 	                _displayObj.x = _c.title.x;
 	                _displayObj.y = _c.title.y;
 	            }
+		    }
+
+		    , enbaledCheck: function( _option ) {
+		    	var _enbaled = true;
+
+		    	if( !_option.enabled || _option.text == '' ) {
+		    		_enbaled = false;
+		    	}
+
+		    	return _enbaled;
 		    }
     	}
     );

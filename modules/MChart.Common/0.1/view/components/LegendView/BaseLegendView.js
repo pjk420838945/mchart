@@ -2,7 +2,8 @@
 	'MChart.View.BaseView'
 ], function( BaseView ) {
 
-	var LEGEND_PADDING = 7;
+	var LEGEND_PADDING = 7
+		, LEGEND_VIEW_NAME = 'legendView';
 
 	var BaseLegendView = Objs(
 		"Common.view.components.BaseLegendView"
@@ -23,76 +24,78 @@
 		        this.addEventListener( MChart.NotificationNames.SHOW_CHART, this.draw );
 		    }
 
-		    , update: function( e, _data ) {
+		    , update: function( _evt, _data ) {
+
+		    	var _option = $.extend( true, MChart.DefaultOptions.legend, _data.legend || {} );
+
+		    	if( !this.enbaledCheck( _option ) ) {
+		    		return;
+		    	}
 
 		    	var _p = this
-		    		, _c = this.coordinate()
-		    		, _displaySeriesIndexMap = _c.displaySeriesIndexMap || [];
+	    			, _tmpItem
+	    			, _tmpText
+	    			, isSelect
+		    		, _legendView = new createjs.Container()
+		    		, _colos = MChart.DefaultOptions.colors//改
+            		, _itemStyle = _option.item.style
+            		, _itemUnselectStyle = _option.item.unselectStyle
+            		, _borderStyle = _option.border.style
+		    		, _displaySeriesIndexMap = 
+		    			this.coordinate().displaySeriesIndexMap || [];
 
-		    	if( _data.legend && !_data.legend.enabled ) {
-		    		return;
-		    	} else {
-		    		var _legendView = new createjs.Container()
-		    			, _tmpItem
-		    			, _tmpText
-		    			, isSelect;
+	    		this.legendItem = [];
 
-		    		this.legendItem = [];
+	    		this.legendText = [];
 
-		    		this.legendText = [];
+            	$.each( _data.series, function( _idx, _item ) {
+            		isSelect = _displaySeriesIndexMap.indexOf( _idx ) >= 0;
 
-		    		if( _data.series ) {
+            		_tmpItem = new createjs.Shape();
 
-	                	var _colos = MChart.DefaultOptions.colors//改
-	                		, _itemStyle = $.extend( 
-		                		( _data.tips.style ? _data.legend.itemStyle || {} : {} )
-		                		, MChart.DefaultOptions.legend.itemStyle, true 
-		                	);
+            		_tmpItem.set( { 
+            			name: _item.name 
+            			, radius: _borderStyle.radius
+            			, color: _colos[ _idx ]
+            			, alpha: isSelect ? _itemStyle.alpha : _itemUnselectStyle.alpha
+            			, selected: isSelect ? true : false
+            		} );
+            		
+            		_tmpItem.on( 
+            			'click'
+            			, _p.legendItemClick
+            			, null
+                        , false
+                        , { 
+                            index: _idx
+                            , view: _p
+                        }
+                    );
 
-	                	$.each( _data.series, function( _idx, _item ) {
-	                		isSelect = _displaySeriesIndexMap.indexOf( _idx ) >= 0;
+            		_legendView.addChild( _tmpItem );
+            		_p.legendItem.push( _tmpItem );
 
-	                		_tmpItem = new createjs.Shape();
+            		_tmpText = new createjs.Text( 
+            			( _item.name || '' )
+            			, _itemStyle.font
+            			, _itemStyle.color 
+            		);
+            		
+            		_tmpText.set( {
+            			selectColor: _colos[ _idx ]
+            			, textAlign: _itemStyle.align
+            		} );
 
-	                		_tmpItem.set( { 
-	                			name: _item.name 
-	                			, color: _colos[ _idx ]
-	                			, alpha: isSelect ? 1 : .5
-	                			, selected: isSelect ? true : false
-	                		} );
-	                		
-	                		_tmpItem.on( 
-	                			'click'
-	                			, _p.legendItemClick
-	                			, null
-		                        , false
-		                        , { 
-		                            index: _idx
-		                            , view: _p
-		                        }
-		                    );
+            		_tmpText.mouseEnabled = false;
 
-	                		_legendView.addChild( _tmpItem );
-	                		_p.legendItem.push( _tmpItem );
+            		_legendView.addChild( _tmpText );
+            		_p.legendText.push( _tmpText );
 
-	                		_tmpText = new createjs.Text( ( _item.name || '' ), _itemStyle.font, '#ffffff' );
-	                		_tmpText.set( {
-	                			selectColor: _colos[ _idx ]
-	                			, textAlign: 'center'
-	                		} );
+            	} );
 
-	                		_tmpText.mouseEnabled = false;
+                this.displayObj = _legendView;
 
-	                		_legendView.addChild( _tmpText );
-	                		_p.legendText.push( _tmpText );
-
-	                	} );
-	                }
-
-	                this.displayObj = _legendView;
-
-	                this.stage().addChild( _legendView.set( { 'name': 'legendView' } ) );
-		    	}
+                this.stage().addChild( _legendView.set( { 'name': LEGEND_VIEW_NAME } ) );
 		    }
 
 		    , draw: function() {
@@ -124,7 +127,7 @@
 			    			, 0
 				    		, _item.width
 			    			, _item.height
-			    			, 5
+			    			, _item.radius
 			    		);
 
 			    		_tmpText.set( {
@@ -140,6 +143,10 @@
 		    			, y: _c.legend.y
 		    		} );
 		    	}
+		    }
+
+		    , enbaledCheck: function( _option ) {
+		    	return _option.enabled;
 		    }
 
 		    , legendItemClick: function( _evt, _data ) {

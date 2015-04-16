@@ -23,46 +23,6 @@
             _canvas.data = this.data;
             _canvas.stage = this.stage;
             _canvas.devicePixelRatio = this.devicePixelRatio();
-
-            // var _moseDownPoint = null;
-            // _canvas.on( 'touchstart MSPointerDown pointerdown', function( _evt ) {
-
-            //     if( ( _isPointerType = _p.isPointerEventType( _evt, 'down' ) ) &&
-            //       !isPrimaryTouch( _evt ) ) return
-            //     var _touch = _isPointerType ? _evt : _evt.touches[ 0 ];
-
-            //     _moseDownPoint = {
-            //         x: _touch.pageX
-            //         , y: _touch.pageY
-            //     }
-            // } );
-
-            // _canvas.on( 'touchmove MSPointerMove pointermove', function( _evt ) {
-
-            //     if( !_moseDownPoint ) {
-            //         return;
-            //     }
-
-            //     if( ( _isPointerType = _p.isPointerEventType( _evt, 'down' ) ) &&
-            //       !isPrimaryTouch( _evt ) ) return
-            //     var _touch = _isPointerType ? _evt : _evt.touches[ 0 ];
-
-            //     if( Math.abs( _touch.pageX - _moseDownPoint.x ) > 20 ) {
-
-            //         createjs.Touch.enable( _p.stage );
-
-            //         _p.canvas().innerView.dispatchEvent( 'mousedown' )
-
-            //         _moseDownPoint = null;
-            //     }
-            // } );
-
-            // _canvas.on( 'touchend MSPointerUp pointerup', function( _evt ) {
-            //     if( _p.stage.__touch ) {
-            //         createjs.Touch.disable( _p.stage );
-            //     }
-            // } );
-
         }
 
         , initSelector: function() {

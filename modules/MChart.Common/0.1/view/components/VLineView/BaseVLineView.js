@@ -23,35 +23,32 @@
 
 		    , update: function( e, _data ) {
 
-		    	var _c = this.coordinate();
+		    	var _option = $.extend( true, MChart.DefaultOptions.xAxis, _data.xAxis || {} );
+
+		    	if( !this.enbaledCheck( _option ) ) {
+		    		return;
+		    	}
 
 		    	var _p = this
 		    		, _tmpVLine
 	                , _vlineArray = []
 	                , _innerView = _p.canvas.innerView
-	                , _tmpGraphics = new createjs.Graphics().setStrokeStyle( 0.75, 'round', 'round' ).beginStroke( '#999' );
+                	, _lineStyle = _option.line.style
+	                , _tmpGraphics = new createjs.Graphics()
+                		.setStrokeStyle( _lineStyle.lineWidth, 'round', 'round' )
+                		.beginStroke( _lineStyle.color );
 
-	            if( _data && _data.xAxis && _data.xAxis.categories ) {
+                for( var _idx = 0; _idx <= _data.xAxis.categories.length; _idx++ ) {
 
-	                var _line = $.extend( ( _data.xAxis.line ? _data.xAxis.line : {} ), MChart.DefaultOptions.xAxis.line, true )
-	                	, _style = _line.style;
+                	_tmpVLine = new createjs.Shape( _tmpGraphics.clone() );
 
-	                if( !_line.enabled ) {
-	                	return;
-	                }
+                	_tmpVLine.mouseEnabled = false;
 
-	                for( var _idx = 0; _idx <= _data.xAxis.categories.length; _idx++ ) {
+                	_vlineArray.push( _tmpVLine );
+                	_innerView.addChild( _tmpVLine );
+                }
 
-	                	_tmpVLine = new createjs.Shape( _tmpGraphics.clone() );
-
-	                	_tmpVLine.mouseEnabled = false;
-
-	                	_vlineArray.push( _tmpVLine );
-	                	_innerView.addChild( _tmpVLine );
-	                }
-
-	                this.displayObj = _vlineArray;
-	            }
+                this.displayObj = _vlineArray;
 
 		    }
 
@@ -71,6 +68,10 @@
 		    				.lineTo( _lineData.end.x, _lineData.end.y );
 		    		} );
 		    	}
+		    }
+
+		    , enbaledCheck: function( _option ) {
+		    	return _option.enabled ? _option.labels.enabled : false;
 		    }
     	}
     );

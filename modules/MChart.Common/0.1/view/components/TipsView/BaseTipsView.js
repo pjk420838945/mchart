@@ -29,86 +29,73 @@
 
 		    , update: function( e, _data ) {
 
-		    	var _c = this.coordinate();
+		    	var _option = $.extend( true, MChart.DefaultOptions.tips, _data.tips || {} );
+
+		    	if( !this.enbaledCheck( _option ) ) {
+		    		return;
+		    	}
 
 		    	var _p = this
 		    		, _tipsTitle
-		    	 	, _tmpTips;
+		    	 	, _tmpTips
+		    	 	, _tmpDataText
+                	, _tmpDataLabel
+                	, _labelMaxWidth
+                	, _labelWidthArray = []
+		    	 	, _tipsView = new createjs.Container()
+                	, _titleStyle = _option.title.style
+                	, _bgStyle = _option.background.style
+                	, _colos = MChart.DefaultOptions.colors//改
+            		, _itemStyle = _option.item.style;
 
-		    	if( _data.tips && !_data.tips.enabled ) {
-		    		return;
-		    	} else {
-		    		// init tips
-		    		var _tipsView = new createjs.Container()
-	                	, _titleStyle = $.extend( 
-	                		( _data.tips.style ? _data.tips.style.titleStyle || {} : {} )
-	                		, MChart.DefaultOptions.tips.style.titleStyle, true 
-	                	)
-	                	, _bgStyle = $.extend( 
-	                		( _data.tips.style ? _data.tips.style.backgroundStyle || {} : {} )
-	                		, MChart.DefaultOptions.tips.style.backgroundStyle, true 
-	                	);
+                _tipsView.visible = false;
 
-	                _tipsView.visible = false;
+	    		_tipsView.addChild( new createjs.Shape() )
+                	.set( { name: TIPS_BG_NAME } ).style = _bgStyle;
 
-		    		_tipsView.addChild( new createjs.Shape() )
-	                	.set( { name: TIPS_BG_NAME } ).style = _bgStyle;
+                _tipsTitle = new createjs.Text( '', _titleStyle.font, _titleStyle.color );
 
-	                _tipsTitle = new createjs.Text( '', _titleStyle.font, _titleStyle.color );
+                _tipsView.addChild( _tipsTitle )
+                	.set( { name: TIPS_TITLE, x: _bgStyle.padding, y: _bgStyle.padding } );
 
-	                _tipsView.addChild( _tipsTitle )
-	                	.set( { name: TIPS_TITLE, x: _bgStyle.padding, y: _bgStyle.padding } );
+                var _colos = MChart.DefaultOptions.colors//改
+                	, _textHeight = new createjs.Text( '', _itemStyle.font, '#fff' ).getMeasuredHeight()
+                	, _textRealY = ( _itemStyle.lineHeight - _textHeight ) / 2 + _textHeight
+                	, _textRealX = _bgStyle.padding + _itemStyle.marginLeft
+                	, _baseY = _bgStyle.padding + _tipsTitle.getMeasuredHeight() + _titleStyle.marginBottom;
 
-	                if( _data.series ) {
+                this.dataText = [];
 
-	                	var _colos = MChart.DefaultOptions.colors//改
-	                		, _itemStyle = $.extend( 
-		                		( _data.tips.style ? _data.tips.style.itemStyle || {} : {} )
-		                		, MChart.DefaultOptions.tips.style.itemStyle, true 
-		                	)
-		                	, _tmpDataText
-		                	, _tmpDataLabel
-		                	, _textHeight = new createjs.Text( '', _itemStyle.font, '#fff' ).getMeasuredHeight()
-		                	, _textRealY = ( _itemStyle.lineHeight - _textHeight ) / 2 + _textHeight
-		                	, _textRealX = _bgStyle.padding + _itemStyle.marginLeft
-		                	, _labelMaxWidth
-		                	, _labelWidthArray = []
-		                	, _baseY = _bgStyle.padding + _tipsTitle.getMeasuredHeight() + _titleStyle.marginBottom;
+                this.dataLabel = [];
 
-		                this.dataText = [];
+            	$.each( _data.series, function( _idx, _item ) {
 
-		                this.dataLabel = [];
+            		_tmpDataLabel = new createjs.Text( ( _item.name || '' ) + ':', _itemStyle.font, _colos[ _idx ] );
+            		_tmpDataLabel.set( { x: 0, baseY: _baseY, realY: _textRealY } );
+            		_tmpDataLabel.textAlign = 'right';
+            		_tipsView.addChild( _tmpDataLabel );
+            		_p.dataLabel.push( _tmpDataLabel );
 
-	                	$.each( _data.series, function( _idx, _item ) {
+            		_tmpDataText = new createjs.Text( '', _itemStyle.font, _colos[ _idx ] );
+            		_tmpDataText.set( { x: 0, y: _tmpDataLabel.y } );
+            		_tmpDataText.textAlign = 'right';
+            		_tipsView.addChild( _tmpDataText );
+            		_p.dataText.push( _tmpDataText );
 
-	                		_tmpDataLabel = new createjs.Text( ( _item.name || '' ) + ':', _itemStyle.font, _colos[ _idx ] );
-	                		_tmpDataLabel.set( { x: 0, baseY: _baseY, realY: _textRealY } );
-	                		_tmpDataLabel.textAlign = 'right';
-	                		_tipsView.addChild( _tmpDataLabel );
-	                		_p.dataLabel.push( _tmpDataLabel );
+            		_labelWidthArray.push( _tmpDataLabel.getMeasuredWidth() );
+            	} );
 
-	                		_tmpDataText = new createjs.Text( '', _itemStyle.font, _colos[ _idx ] );
-	                		_tmpDataText.set( { x: 0, y: _tmpDataLabel.y } );
-	                		_tmpDataText.textAlign = 'right';
-	                		_tipsView.addChild( _tmpDataText );
-	                		_p.dataText.push( _tmpDataText );
+            	_labelMaxWidth = Math.max.apply( null, _labelWidthArray );
 
-	                		_labelWidthArray.push( _tmpDataLabel.getMeasuredWidth() );
-	                	} );
+            	$.each( _p.dataLabel, function( _idx, _label ) {
+            		_label.set( { x: _textRealX + _labelMaxWidth } );
 
-	                	_labelMaxWidth = Math.max.apply( null, _labelWidthArray );
+            		_p.dataText[ _idx ].set( { x: _label.x } );
+            	} );
 
-	                	$.each( _p.dataLabel, function( _idx, _label ) {
-	                		_label.set( { x: _textRealX + _labelMaxWidth } );
+	    		this.displayObj = _tipsView;
 
-	                		_p.dataText[ _idx ].set( { x: _label.x } );
-	                	} );
-	                }
-
-		    		this.displayObj = _tipsView;
-
-		    		this.stage().addChild( _tipsView.set( { 'name': 'tipsView' } ) );
-		    	}
+	    		this.stage().addChild( _tipsView.set( { 'name': 'tipsView' } ) );
 
 		    }
 
@@ -130,6 +117,10 @@
 
 		    		this.tipsDisplayData = _tipsDisplayData;
 		    	}
+		    }
+
+		    , enbaledCheck: function( _option ) {
+		    	return _option.enabled;
 		    }
 
 		    , showTips: function( _evt, _data ) {

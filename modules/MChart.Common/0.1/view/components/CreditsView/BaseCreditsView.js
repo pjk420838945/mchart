@@ -23,25 +23,25 @@
 
 		    , update: function( e, _data ) {
 
-		    	var _c = this.coordinate();
+		    	var _option = $.extend( true, MChart.DefaultOptions.credits, _data.credits || {} );
 
-		    	if( _data && _data.credits.enabled && ( _data.credits.text || _data.credits.href ) ) {
-
-		    		var _defaultOptions = MChart.DefaultOptions.credits
-		    			, _style = $.extend( _data.credits.style || {}, _defaultOptions.style, true )
-		    			, _text = _data.credits.text || _defaultOptions.text
-		    			, _href = _data.credits.href || _defaultOptions.href
-
-		    		this.displayObj = new createjs.Text( 
-	                    _text
-	                    , _style.font
-	                    , _style.color
-	                );
-
-	                this.displayObj.textAlign = "right";
-
-	                this.stage().addChild( this.displayObj );
+		    	if( !this.enbaledCheck( _option ) ) {
+		    		return;
 		    	}
+
+		    	var _creditsStyle = _option.style
+	    			, _text = _option.text
+	    			, _href = _option.href
+
+	    		this.displayObj = new createjs.Text( 
+                    _text
+                    , _creditsStyle.font
+                    , _creditsStyle.color
+                );
+
+                this.displayObj.textAlign = "right";
+
+                this.stage().addChild( this.displayObj );
 		    }
 
 		    , draw: function() {
@@ -52,6 +52,10 @@
 	                _displayObj.x = _c.credits.x;
 	                _displayObj.y = _c.credits.y;
 	            }
+		    }
+
+		    , enbaledCheck: function( _option ) {
+		    	return _option.enabled;
 		    }
     	}
     );

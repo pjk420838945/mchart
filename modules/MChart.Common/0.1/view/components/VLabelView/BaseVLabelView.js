@@ -23,46 +23,50 @@
 
 		    , update: function( e, _data ) {
 
-		    	var _c = this.coordinate();
+		    	var _option = $.extend( true, MChart.DefaultOptions.yAxis, _data.yAxis || {} );
 
-                if( _data && _data.yAxis ) {
+		    	if( !this.enbaledCheck( _option ) ) {
+		    		return;
+		    	}
 
-	                var _style = $.extend( ( _data.yAxis.labels ? _data.yAxis.labels.style || {} : {} ), MChart.DefaultOptions.yAxis.labels.style, true );
+                var _p = this
+                	, _tmpLabel
+                	, _tmpArraw
+                	, _labelArray = []
+                	, _arrawArray = []
 
-	                var _rateInfo = this.canvas.coordinate.rateInfo;
+                	, _labelStyle = _option.labels.style
+                	, _lineStyle = _option.line.style
+                	, _rateInfo = this.coordinate().rateInfo
+                	, _tmpGraphics = new createjs.Graphics()
+                		.setStrokeStyle( _lineStyle.lineWidth, 'round', 'round' )
+                		.beginStroke( _lineStyle.color );
 
-	                var _p = this
-	                	, _tmpLabel
-	                	, _tmpArraw
-	                	, _tmpGraphics
-	                	, _labelArray = []
-	                	, _arrawArray = [];
+                _rateInfo.realRate && 
+                	$.each( _rateInfo.realRate, function( _idx, _rateText ) {
 
-	                	_tmpGraphics = new createjs.Graphics().setStrokeStyle( 0.75, 'round', 'round' ).beginStroke( '#999' );
+                	_tmpLabel = new createjs.Text( 
+	                    _rateText
+	                    , _labelStyle.font
+	                    , _labelStyle.color
+	                );
 
-	                _rateInfo.realRate && $.each( _rateInfo.realRate, function( _idx, _rateText ) {
+	                _tmpLabel.mouseEnabled = false;
 
-	                	_tmpLabel = new createjs.Text( 
-		                    _rateText
-		                    , _style.font
-		                    , _style.color
-		                );
+	                _tmpLabel.textAlign = _labelStyle.align;
 
-		                _tmpLabel.mouseEnabled = false;
+                	_labelArray.push( _tmpLabel );
+	                _p.stage().addChild( _tmpLabel );
 
-	                	_labelArray.push( _tmpLabel );
-		                _p.stage().addChild( _tmpLabel );
+	                _tmpArraw = new createjs.Shape( _tmpGraphics.clone() );
 
-		                _tmpArraw = new createjs.Shape( _tmpGraphics.clone() );
+	                _arrawArray.push( _tmpArraw );
+	                _p.stage().addChild( _tmpArraw );
 
-		                _arrawArray.push( _tmpArraw );
-		                _p.stage().addChild( _tmpArraw );
+                } );
 
-	                } );
-
-	                this.displayObj = _labelArray;
-	                this.arrawArray = _arrawArray;
-	            }
+                this.displayObj = _labelArray;
+                this.arrawArray = _arrawArray;
 		    }
 
 		    , draw: function() {
@@ -80,8 +84,6 @@
 		    			_label.x = _labelData.x;
 		    			_label.y = _labelData.y;
 
-		    			// console.log( _labelData.arraw );
-
 		    			if( _labelData.arraw ) {
 			    			_arrawData = _labelData.arraw;
 			    			_arraw = _arrawData.ele;
@@ -91,6 +93,10 @@
 		    		} );
 		    		
 		    	}
+		    }
+
+		    , enbaledCheck: function( _option ) {
+		    	return _option.enabled ? _option.labels.enabled : false;
 		    }
 
 		    , labelMaxWidth: function() {

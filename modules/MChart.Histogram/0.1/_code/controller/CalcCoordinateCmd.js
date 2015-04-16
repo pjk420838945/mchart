@@ -201,23 +201,26 @@
 
 	            /* calc yAxis */
 	            var tmpArr
-	                , _partHeight
-	                , _partWidth
 	                , _tmpX
 	                , _tmpY
+	                , _partHeight
+	                , _partWidth
 	                , _vlabelMaxWidth
 	                , _hlabelMaxHeight
 	                , _arrowWidth = 5
-	                , _marginWidth = 5;
-
-	            var _hLabelView = _hLabelMediator.getComponent()
-	            	, _hlabels = _hLabelView.getDisplayObj();
-
-	            var _vLabelView = _vLabelMediator.getComponent()
-	            	, _vlabels = _vLabelView.getDisplayObj()
-	            	, _arraws = _vLabelView.getArraws()
+	                , _marginWidth = 5
 	            	, _hafLabeHeight;
 
+	            var _hLabelView = _hLabelMediator.getComponent()
+	            	, _hlabels = _hLabelView.getDisplayObj()
+	            	, _vLabelView = _vLabelMediator.getComponent()
+	            	, _vlabels = _vLabelView.getDisplayObj()
+	            	, _arraws = _vLabelView.getArraws();
+
+	            _in_maxY = _maxY - ( _hLabelView.labelMaxHeight() || 0 ) - _arrowWidth - _marginWidth - _y;
+
+	            _partHeight = _in_maxY / ( _c.rateInfo.realRate.length - 1 );
+	            
 	            /* calc vlabels */
 	            if( _vlabels ) {
 	                _c.vlabels = [];
@@ -228,16 +231,12 @@
 	                _tmpX = _x;
 	                _tmpY = _y;
 
-	                _in_maxY = _maxY - _hLabelView.labelMaxHeight() - _arrowWidth - _marginWidth - _y;
-
-	                _partHeight = _in_maxY / ( _vlabels.length - 1 );
-
 	                var _arrawTmpX = _tmpX + _vlabelMaxWidth + _marginWidth;
 
 	                _hafLabeHeight = _vlabels[ 0 ].getMeasuredHeight() / 2;
 	                $.each( _vlabels, function( _idx, _label ) {
 	                    tmpArr.push( {
-	                        x: _tmpX
+	                        x: _tmpX + _vlabelMaxWidth
 	                        , y: _tmpY - _hafLabeHeight
 	                        , ele: _label
 	                        , arraw: _arraws && ( function() {
@@ -261,11 +260,9 @@
 	                tmpArr.length && ( _c.vlabels = tmpArr );
 
 	                _x += _vlabelMaxWidth + _marginWidth + ( _arraws ? _arrowWidth : 0 );
-
 	            }
 
 	            /* calc VTitle */
-	            // var _vtitle = _vTitleMediator.getComponent().getDisplayObj();
 	            if( _vtitle ) {
 	                _c.vtitle = {
 	                    x: _x
@@ -297,6 +294,8 @@
 	            	_in_x = 0; _in_y = 0;
 	            }
 
+	            _partWidth = _innerViewScrollWidth / _xAxis.categories.length;
+	            
 	            /* calc hlabel */
 	            if( _hlabels ) {
 	            	_c.hlabels = [];
@@ -306,8 +305,6 @@
 	                	, innerViewY = _c.innerView.height
 	                	, _arraws = _hLabelView.getArraws()
 	                	, _arrawTmpY;
-
-	                _partWidth = _innerViewScrollWidth / _hlabels.length;
 
 	            	_tmpX = _partWidth / 2;
 	                _tmpY = innerViewY - _hLabelView.labelMaxHeight();

@@ -23,38 +23,33 @@
 
 		    , update: function( e, _data ) {
 
-		    	var _c = this.coordinate();
+		    	var _option = $.extend( true, MChart.DefaultOptions.yAxis, _data.yAxis || {} );
+
+		    	if( !this.enbaledCheck( _option ) ) {
+		    		return;
+		    	}
 
 		    	var _p = this
 		    		, _tmpHLine
 	                , _hlineArray = []
 	                , _innerView = _p.canvas.innerView
-	                , _tmpGraphics = new createjs.Graphics().setStrokeStyle( 0.75, 'round', 'round' ).beginStroke( '#999' );
+	                , _lineStyle = _option.line.style
+                	, _rateInfo = this.coordinate().rateInfo
+	                , _tmpGraphics = new createjs.Graphics()
+                		.setStrokeStyle( _lineStyle.lineWidth, 'round', 'round' )
+                		.beginStroke( _lineStyle.color );
 
-	            if( _data && _data.yAxis ) {
+                for( var _idx = 0; _idx < _rateInfo.realRate.length; _idx++ ) {
 
-	                var _line = $.extend( ( _data.yAxis.line ? _data.yAxis.line : {} ), MChart.DefaultOptions.yAxis.line, true )
-	                	, _style = _line.style;
+                	_tmpHLine = new createjs.Shape( _tmpGraphics.clone() );
 
-	                var _rateInfo = this.canvas.coordinate.rateInfo;
+                	_tmpHLine.mouseEnabled = false;
 
-	                if( !_line.enabled ) {
-	                	return;
-	                }
+                	_hlineArray.push( _tmpHLine );
+                	_innerView.addChild( _tmpHLine );
+                }
 
-	                for( var _idx = 0; _idx < _rateInfo.realRate.length; _idx++ ) {
-
-	                	_tmpHLine = new createjs.Shape( _tmpGraphics.clone() );
-
-	                	_tmpHLine.mouseEnabled = false;
-
-	                	_hlineArray.push( _tmpHLine );
-	                	_innerView.addChild( _tmpHLine );
-	                }
-
-	                this.displayObj = _hlineArray;
-	            }
-
+                this.displayObj = _hlineArray;
 		    }
 
 		    , draw: function() {
@@ -73,6 +68,10 @@
 		    				.lineTo( _lineData.end.x, _lineData.end.y );
 		    		} );
 		    	}
+		    }
+
+		    , enbaledCheck: function( _option ) {
+		    	return _option.enabled ? _option.line.enabled : false;
 		    }
     	}
     );

@@ -23,20 +23,21 @@
 
 		    , update: function( e, _data ) {
 
-		    	var _c = this.coordinate();
+		    	var _option = $.extend( true, MChart.DefaultOptions.yAxis, _data.yAxis || {} );
 
-                if( _data && _data.yAxis && _data.yAxis.title && _data.yAxis.title.text ) {
+		    	if( !this.enbaledCheck( _option ) ) {
+		    		return;
+		    	}
 
-	                var _titleStyle = $.extend( _data.yAxis.title.style || {}, MChart.DefaultOptions.yAxis.title.style, true );
+                var _titleStyle = _option.title.style;
 
-	                this.displayObj = new createjs.Text( 
-	                    _data.yAxis.title.text
-	                    , _titleStyle.font
-	                    , _titleStyle.color
-	                );
-	                
-	                this.stage().addChild( this.displayObj );
-	            }
+                this.displayObj = new createjs.Text( 
+                    _data.yAxis.title.text
+                    , _titleStyle.font
+                    , _titleStyle.color
+                );
+                
+                this.stage().addChild( this.displayObj );
 		    }
 
 		    , draw: function() {
@@ -48,6 +49,10 @@
 	                _displayObj.x = _c.vtitle.x;
 	                _displayObj.y = _c.vtitle.y;
 	            }
+		    }
+
+		    , enbaledCheck: function( _option ) {
+		    	return _option.enabled ? _option.title.enabled : false;
 		    }
     	}
     );

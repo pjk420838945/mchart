@@ -28,25 +28,29 @@
 		    		, _innerView = _p.canvas.innerView
 		    		, _displaySeriesIndexMap = _p.canvas.displaySeriesIndexMap
 		    		, _tmpArray = []
+		    		, _tmpColor
 		    		, _tmpRect;
 
 		    	if( _c.displaySeries ) {
 		    		
-		    		var _colors = _p.merge( MChart.DefaultOptions.colors, _data.colors || {} )
-		    			, _colorLen = _colors.length;
+		    		var _colors = _p.merge( MChart.DefaultOptions.colors, _data.colors || {} );
 
 		    		this.setAnimationEnabled( _data );
 
 		    		$.each( _c.displaySeries, function( _i, _seriesObj ) {
+		    			
 		    			_tmpArray[ _i ] = [];
+		    			_tmpColor = _seriesObj.color || 
+		    				_colors[ _displaySeriesIndexMap[ _i ] % _colors.length ];
+
 		    			$.each( _seriesObj.data, function( _idx, _dataNum ) {
 		    				_tmpRect = new createjs.Shape();
 
 		    				_tmpRect.mouseEnabled = false;
 
-		    				_tmpRect.data = typeof _dataNum === 'number' ? _dataNum : parseFloat( _dataNum );
+		    				_tmpRect.data = parseFloat( _dataNum );
 
-		    				_tmpRect.fillColor = _colors[ _displaySeriesIndexMap[ _i ] % _colorLen ];
+		    				_tmpRect.fillColor = _tmpColor;
 
 		    				_innerView.addChild( _tmpRect );
 
@@ -135,27 +139,6 @@
 		    , getAnimationEnabled: function() {
 		    	return this.animationEnabled;
 		    }
-
-			, merge: function( first, second ) {
-				var l = second.length,
-					i = first.length,
-					j = 0;
-
-				if ( typeof l === "number" ) {
-					for ( ; j < l; j++ ) {
-						first[ i++ ] = second[ j ];
-					}
-				} else {
-					while ( second[j] !== undefined ) {
-						first[ i++ ] = second[ j++ ];
-					}
-				}
-
-				first.length = i;
-
-				return first;
-			}
-
     	}
     );
 

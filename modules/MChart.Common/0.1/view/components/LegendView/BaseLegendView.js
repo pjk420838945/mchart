@@ -37,7 +37,7 @@
 	    			, _tmpText
 	    			, isSelect
 		    		, _legendView = new createjs.Container()
-		    		, _colos = MChart.DefaultOptions.colors//改
+		    		, _colos = _p.merge( MChart.DefaultOptions.colors, _data.colors || {} )
             		, _itemStyle = _option.item.style
             		, _itemUnselectStyle = _option.item.unselectStyle
             		, _borderStyle = _option.border.style

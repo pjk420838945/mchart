@@ -45,7 +45,7 @@
 		    	 	, _tipsView = new createjs.Container()
                 	, _titleStyle = _option.title.style
                 	, _bgStyle = _option.background.style
-                	, _colos = MChart.DefaultOptions.colors//改
+                	, _colos = _p.merge( MChart.DefaultOptions.colors, _data.colors || {} )
             		, _itemStyle = _option.item.style;
 
                 _tipsView.visible = false;
@@ -58,8 +58,7 @@
                 _tipsView.addChild( _tipsTitle )
                 	.set( { name: TIPS_TITLE, x: _bgStyle.padding, y: _bgStyle.padding } );
 
-                var _colos = MChart.DefaultOptions.colors//改
-                	, _textHeight = new createjs.Text( '', _itemStyle.font, '#fff' ).getMeasuredHeight()
+                var _textHeight = new createjs.Text( '', _itemStyle.font, '#fff' ).getMeasuredHeight()
                 	, _textRealY = ( _itemStyle.lineHeight - _textHeight ) / 2 + _textHeight
                 	, _textRealX = _bgStyle.padding + _itemStyle.marginLeft
                 	, _baseY = _bgStyle.padding + _tipsTitle.getMeasuredHeight() + _titleStyle.marginBottom;

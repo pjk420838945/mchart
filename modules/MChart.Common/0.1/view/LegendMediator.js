@@ -1,4 +1,4 @@
-;(function(define, _win) { 'use strict'; define( [
+;(function(define, _win) { 'use strict'; define( 'MChart.Common.View.LegendMediator', [
     'MChart.Common.View.BaseLegendView'
 ], function( BaseLegendView ) {
 

@@ -1,4 +1,4 @@
-;(function(define, _win) { 'use strict'; define( [ 
+;(function(define, _win) { 'use strict'; define( 'MChart.Histogram.MainFacad', [ 
     'MChart.Histogram.Controller.CalcCoordinateCmd'
     , 'MChart.Common.Controller.FilterDataCmd'
     , 'MChart.Common.Controller.ClearCmd'

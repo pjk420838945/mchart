@@ -15,14 +15,15 @@
     /* Requirejs */
     document.write( '<script src="'+_path+'require.js" ><\/script>' );
 
+    /* json2 */
+    document.write( '<script src="'+_path+'/lib/JSON/2/JSON.js" ><\/script>' );
+
     /* Zepto */
     document.write( '<script src="'+_path+'/lib/Zepto/src/zepto.js" ><\/script>' );
     document.write( '<script src="'+_path+'/lib/Zepto/src/event.js" ><\/script>' );
     document.write( '<script src="'+_path+'/lib/Zepto/src/selector.js" ><\/script>' );
     document.write( '<script src="'+_path+'/lib/Zepto/src/touch.js" ><\/script>' );
     
-    // document.write( '<script src="'+_path+'/lib/Jquery/jquery.js" ><\/script>' );
-
     /* pureMVC */
     document.write( '<script src="'+_path+'/lib/PureMVC/objs-2.1.1-min.js" ><\/script>' );
     document.write( '<script src="'+_path+'/lib/PureMVC/puremvc-objs-2.0-min.js" ><\/script>' );

@@ -1,4 +1,4 @@
-;(function(define, _win) { 'use strict'; define( [
+;(function(define, _win) { 'use strict'; define( 'MChart.Common.Model.RateProxy', [
 	'MChart.Common.Model.BaseRateData'
 ], function( BaseRateData ) {
 

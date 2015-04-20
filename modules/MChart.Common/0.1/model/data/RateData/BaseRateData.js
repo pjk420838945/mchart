@@ -1,4 +1,4 @@
-;(function(define, _win) { 'use strict'; define( [
+;(function(define, _win) { 'use strict'; define( 'MChart.Common.Model.BaseRateData', [
 	'MChart.model.BaseData'
 ], function( BaseData ) {
 

@@ -1,4 +1,4 @@
-;(function(define, _win) { 'use strict'; define( [ 
+;(function(define, _win) { 'use strict'; define( 'MChart.Histogram.View.GraphicView', [ 
 	'MChart.View.BaseView'
 ], function( BaseView ) {
 

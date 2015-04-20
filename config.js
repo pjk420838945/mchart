@@ -88,9 +88,6 @@ requirejs.config( {
 
         , 'MChart.Histogram.View.GraphicMediator': 'modules/MChart.Histogram/0.1/_code/view/GraphicMediator'
         , 'MChart.Histogram.View.GraphicView': 'modules/MChart.Histogram/0.1/_code/view/components/GraphicView'
-
-        /* lib Files */
-        , 'Json2': 'lib/JSON/2/JSON'
     }
 });
 /**

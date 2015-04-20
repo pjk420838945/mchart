@@ -1,4 +1,4 @@
-;(function(define, _win) { 'use strict'; define( [
+;(function(define, _win) { 'use strict'; define( 'MChart.Common.Controller.FilterDataCmd', [
 	'MChart.Common.Model.SeriesProxy'
 ], function( 
 	SeriesProxy

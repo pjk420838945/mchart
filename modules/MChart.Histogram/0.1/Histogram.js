@@ -1,4 +1,4 @@
-;(function(define, _win) { 'use strict'; define( [
+;(function(define, _win) { 'use strict'; define( 'MChart.Histogram', [
     'MChart.Base'
     , 'MChart.Histogram.MainFacad'
 ], function( Base, MainFacad ) {

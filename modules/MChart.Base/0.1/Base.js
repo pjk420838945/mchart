@@ -1,5 +1,4 @@
-;(function(define, _win) { 'use strict'; define( [ 
-    , 'Json2'
+;(function(define, _win) { 'use strict'; define( 'MChart.Base', [ 
     , 'JC.Common'
     , 'MChart.NotificationNames'
     , 'MChart.DefaultOptions'

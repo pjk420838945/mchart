@@ -1,4 +1,4 @@
-;(function(define, _win) { 'use strict'; define( [
+;(function(define, _win) { 'use strict'; define( 'MChart.Common.View.InnerViewMediator', [
     'MChart.Common.View.BaseInnerView'
 ], function( BaseInnerView ) {
 

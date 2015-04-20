@@ -1,4 +1,4 @@
-;(function(define, _win) { 'use strict'; define( [
+;(function(define, _win) { 'use strict'; define( 'MChart.Common.View.SubtitleMediator', [
     'MChart.Common.View.BaseSubtitleView'
 ], function( BaseSubtitleView ) {
 

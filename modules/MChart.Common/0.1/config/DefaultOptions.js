@@ -1,4 +1,4 @@
-;(function(define, _win) { 'use strict'; define( [], function(){
+;(function(define, _win) { 'use strict'; define( 'MChart.DefaultOptions', [], function(){
 /**
  * JChart.DefaultOptions 是 JChart 图表库的默认配置, 提供所有图表的默认参数
  * <p><a href='https://github.com/openjavascript/jchart' target='_blank'>JChart Project Site</a>

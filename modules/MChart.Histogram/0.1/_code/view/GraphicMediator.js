@@ -1,4 +1,4 @@
-;(function(define, _win) { 'use strict'; define( [
+;(function(define, _win) { 'use strict'; define( 'MChart.Histogram.View.GraphicMediator', [
     'MChart.Histogram.View.GraphicView'
 ], function( GraphicView ) {
 

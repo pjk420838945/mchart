@@ -1,4 +1,4 @@
-;(function(define, _win) { 'use strict'; define( [
+;(function(define, _win) { 'use strict'; define( 'MChart.Common.View.GroupMediator', [
     'MChart.Common.View.BaseGroupView'
 ], function( BaseGroupView ) {
 

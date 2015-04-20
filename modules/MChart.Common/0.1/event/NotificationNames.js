@@ -1,4 +1,4 @@
-;(function(define, _win) { 'use strict'; define( [], function() {
+;(function(define, _win) { 'use strict'; define( 'MChart.NotificationNames', [], function() {
 
 	window.MChart || ( window.MChart = {} );
 

@@ -9,7 +9,7 @@
 
     var BaseHLineMediator = Objs(
         "Common.View.Mediator.HLineMediator"
-        , Mediator
+        , puremvc.Mediator
         , {
             /** 
              * @construct 
@@ -34,7 +34,7 @@
                     }
                 }
 
-                BaseHLineMediator.$super.initialize.call( this, MEDIATOR_NAME, _viewComponent );
+                BaseHLineMediator.$super.constructor.call( this, MEDIATOR_NAME, _viewComponent );
 
             }
 

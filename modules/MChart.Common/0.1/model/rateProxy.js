@@ -9,7 +9,7 @@
 
     var RateProxy = Objs(
     	"Common.Model.Proxy.RateProxy"
-        , Proxy
+        , puremvc.Proxy
         , {
         	initialize: function( _nickName, _canvas ) {
 
@@ -25,7 +25,7 @@
                     }
                 }
 
-                RateProxy.$super.initialize.call( this, PROXY_NAME, _data );
+                RateProxy.$super.constructor.call( this, PROXY_NAME, _data );
             }
         }
     );

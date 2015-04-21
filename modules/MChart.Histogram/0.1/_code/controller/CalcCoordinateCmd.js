@@ -38,7 +38,7 @@
 
 	var CalcCoordinateCmd = Objs(
 		"Histogram.Controller.CalcCoordinateCmd"
-	    , MacroCommand
+	    , puremvc.MacroCommand
 		, {
 		    /** 
 		     * 添加Subcommands来启动PuerMVC组件 

@@ -9,7 +9,7 @@
 
     var BaseGroupMediator = Objs(
         "Common.View.Mediator.GroupMediator"
-        , Mediator
+        , puremvc.Mediator
         , {
             /** 
              * @construct 
@@ -34,7 +34,7 @@
                     }
                 }
 
-                BaseGroupMediator.$super.initialize.call( this, MEDIATOR_NAME, _viewComponent );
+                BaseGroupMediator.$super.constructor.call( this, MEDIATOR_NAME, _viewComponent );
 
                 this.initEvent();
             }

@@ -4,7 +4,7 @@
 
 	var DrawCmd = Objs(
 		"Common.Controller.DrawCmd"
-	    , MacroCommand
+	    , puremvc.MacroCommand
 		, {
 		     
 		    initializeMacroCommand: function( note ) {}

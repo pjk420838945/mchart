@@ -9,7 +9,7 @@
 
     var BaseCreditsMediator = Objs(
         "Common.View.Mediator.BaseCreditsMediator"
-        , Mediator
+        , puremvc.Mediator
         , {
             /** 
              * @construct 
@@ -34,7 +34,7 @@
                     }
                 }
 
-                BaseCreditsMediator.$super.initialize.call( this, MEDIATOR_NAME, _viewComponent );
+                BaseCreditsMediator.$super.constructor.call( this, MEDIATOR_NAME, _viewComponent );
             }
 
             /** 

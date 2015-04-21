@@ -4,7 +4,7 @@
 
 	if( !MChart.NotificationNames ) {
 
-		MChart.NotificationNames = Objs( "Event.NotificationNames",{} );
+		MChart.NotificationNames = {};
 
 		/* Command */
 		MChart.NotificationNames.CALC_DATA_CMD = 'calcDataCmd';
@@ -26,7 +26,7 @@
 
 	if( !MChart.NickNames ) {
 
-		MChart.NickNames = Objs( "Event.NickNames",{} );
+		MChart.NickNames = {};
 		
 		/* NickNames */
 		MChart.NickNames.CURVEGRAM = 'mchartCurvegram';

@@ -9,7 +9,7 @@
 
     var BaseTipsMediator = Objs(
         "Common.View.Mediator.TipsMediator"
-        , Mediator
+        , puremvc.Mediator
         , {
             /** 
              * @construct 
@@ -34,7 +34,7 @@
                     }
                 }
 
-                BaseTipsMediator.$super.initialize.call( this, MEDIATOR_NAME, _viewComponent );
+                BaseTipsMediator.$super.constructor.call( this, MEDIATOR_NAME, _viewComponent );
 
                 this.initEvent();
             }

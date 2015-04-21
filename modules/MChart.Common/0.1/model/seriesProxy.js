@@ -9,7 +9,7 @@
 
     var SeriesProxy = Objs(
     	"Common.Model.Proxy.SeriesProxy"
-        , Proxy
+        , puremvc.Proxy
         , {
         	initialize: function( _nickName, _canvas ) {
 
@@ -25,7 +25,7 @@
                     }
                 }
 
-                SeriesProxy.$super.initialize.call( this, PROXY_NAME, _data );
+                SeriesProxy.$super.constructor.call( this, PROXY_NAME, _data );
             }
         }
     );

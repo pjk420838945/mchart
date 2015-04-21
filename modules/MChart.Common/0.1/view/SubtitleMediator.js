@@ -9,7 +9,7 @@
 
     var SubtitleMediator = Objs(
         "Common.View.Mediator.SubtitleMediator"
-        , Mediator
+        , puremvc.Mediator
         , {
             /** 
              * @construct 
@@ -34,7 +34,7 @@
                     }
                 }
 
-                SubtitleMediator.$super.initialize.call( this, MEDIATOR_NAME, _viewComponent );
+                SubtitleMediator.$super.constructor.call( this, MEDIATOR_NAME, _viewComponent );
 
             }
 

@@ -9,7 +9,7 @@
 
     var InnerViewMediator = Objs(
         "Common.View.Mediator.InnerViewMediator"
-        , Mediator
+        , puremvc.Mediator
         , {
         	/** 
              * @construct 
@@ -34,7 +34,7 @@
                     }
                 }
                 
-                InnerViewMediator.$super.initialize.call( this, MEDIATOR_NAME, _viewComponent );
+                InnerViewMediator.$super.constructor.call( this, MEDIATOR_NAME, _viewComponent );
 
                 this.initEvent();
             }

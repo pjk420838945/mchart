@@ -9,7 +9,7 @@
 
     var BaseLegendMediator = Objs(
         "Common.View.Mediator.LegendMediator"
-        , Mediator
+        , puremvc.Mediator
         , {
             /** 
              * @construct 
@@ -36,7 +36,7 @@
                     }
                 }
 
-                BaseLegendMediator.$super.initialize.call( this, MEDIATOR_NAME, _viewComponent );
+                BaseLegendMediator.$super.constructor.call( this, MEDIATOR_NAME, _viewComponent );
 
                 this.initEvent();
             }

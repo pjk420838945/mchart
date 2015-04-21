@@ -9,7 +9,7 @@
 
     var TitleMediator = Objs(
         "Common.View.Mediator.TitleMediator"
-        , Mediator
+        , puremvc.Mediator
         , {
             /** 
              * @construct 
@@ -34,7 +34,7 @@
                     }
                 }
                 
-                TitleMediator.$super.initialize.call( this, MEDIATOR_NAME, _viewComponent );
+                TitleMediator.$super.constructor.call( this, MEDIATOR_NAME, _viewComponent );
             }
 
             /** 

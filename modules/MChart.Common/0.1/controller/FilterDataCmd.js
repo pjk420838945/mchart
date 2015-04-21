@@ -6,7 +6,7 @@
 
 	var FilterDataCmd = Objs(
 		"Common.Controller.FilterDataCmd"
-	    , MacroCommand
+	    , puremvc.MacroCommand
 		, {
 		    
 		    initializeMacroCommand: function( note ) {}

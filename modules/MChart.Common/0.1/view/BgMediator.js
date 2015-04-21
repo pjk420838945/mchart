@@ -9,7 +9,7 @@
 
     var BgMediator = Objs(
         "Common.View.Mediator.BgMediator"
-        , Mediator
+        , puremvc.Mediator
         , {
             /** 
              * @construct 
@@ -33,9 +33,8 @@
                         break;
                     }
                 }
-                
-                BgMediator.$super.initialize.call( this, MEDIATOR_NAME, _viewComponent );
 
+                BgMediator.$super.constructor.call( this, MEDIATOR_NAME, _viewComponent );
             }
 
             /** 

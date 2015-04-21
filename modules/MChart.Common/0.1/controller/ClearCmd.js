@@ -38,7 +38,7 @@
 
 	var ClearCmd = Objs(
 		"Common.Controller.ClearCmd"
-	    , MacroCommand
+	    , puremvc.MacroCommand
 		, {
 
 		    initializeMacroCommand: function( note ) {}

@@ -9,7 +9,7 @@
 
     var GraphicMediator = Objs(
         "Histogram.View.Mediator.GraphicMediator"
-        , Mediator
+        , puremvc.Mediator
         , {
             /** 
              * @construct 
@@ -34,8 +34,7 @@
                     }
                 }
 
-                GraphicMediator.$super.initialize.call( this, _mediatorName, _viewComponent );
-
+                GraphicMediator.$super.constructor.call( this, _mediatorName, _viewComponent );
             }
 
             /** 

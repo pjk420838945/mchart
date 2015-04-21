@@ -9,7 +9,7 @@
 
     var BaseVLabelMediator = Objs(
         "Common.View.Mediator.VLabelMediator"
-        , Mediator
+        , puremvc.Mediator
         , {
             /** 
              * @construct 
@@ -34,7 +34,7 @@
                     }
                 }
 
-                BaseVLabelMediator.$super.initialize.call( this, MEDIATOR_NAME, _viewComponent );
+                BaseVLabelMediator.$super.constructor.call( this, MEDIATOR_NAME, _viewComponent );
 
             }
 

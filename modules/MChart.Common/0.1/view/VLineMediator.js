@@ -9,7 +9,7 @@
 
     var BaseVLineMediator = Objs(
         "Common.View.Mediator.VLineMediator"
-        , Mediator
+        , puremvc.Mediator
         , {
             /** 
              * @construct 
@@ -34,7 +34,7 @@
                     }
                 }
 
-                BaseVLineMediator.$super.initialize.call( this, MEDIATOR_NAME, _viewComponent );
+                BaseVLineMediator.$super.constructor.call( this, MEDIATOR_NAME, _viewComponent );
 
             }
 

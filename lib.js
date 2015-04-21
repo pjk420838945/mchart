@@ -26,7 +26,8 @@
     
     /* pureMVC */
     document.write( '<script src="'+_path+'/lib/PureMVC/objs-2.1.1-min.js" ><\/script>' );
-    document.write( '<script src="'+_path+'/lib/PureMVC/puremvc-objs-2.0-min.js" ><\/script>' );
+    document.write( '<script src="'+_path+'/lib/PureMVC/puremvc-1.0.1.js" ><\/script>' );
+    // document.write( '<script src="'+_path+'/lib/PureMVC/puremvc-objs-2.0-min.js" ><\/script>' );
     
     /* Esaeljs */
     document.write( '<script src="'+_path+'/lib/EaselJS/lib/easeljs-0.8.0.min.js" ><\/script>' );

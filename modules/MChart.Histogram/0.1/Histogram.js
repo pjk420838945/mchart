@@ -3,38 +3,48 @@
     , 'MChart.Histogram.MainFacad'
 ], function( Base, MainFacad ) {
 
+    var CHART_CLASS_NAME = 'mchart-histogram';
+
     var Histogram = $.extend( Base, {
         
         initChart: function() {
 
-            this.initClassName = 'mchart-histogram';
+            var _p = this
+                , _canvas = this.init( CHART_CLASS_NAME );
 
-            this.init();
+            var _tmpFacade;
 
-            this.initCanvasEvent();
+            // for( var _i = 0; _i < _canvas.length; _i++ ) {
+            //     _arr.push( new MainFacad( _i ) );
+            // }
 
-            /* 获取facade实例并进行初始化 */
-            this.facade = MainFacad.getInstance();
+            $.each( _canvas, function( _idx, _canvas ) {
 
-            this.facade.initChart( {
-                selector: this.canvas() /* 传入canvas对象进行图表初始化 */
-                , nickName: MChart.NickNames.HISTOGRAM /* view会根据传入的图表别名进行区别初始化，图表应该保证别名的唯一性 */
+                _tmpFacade = MainFacad.getInstance( _idx );
+                // _tmpFacade = new MainFacad( _idx );
+
+                _p.initCanvasEvent( _canvas, _tmpFacade );
+
+                _tmpFacade.initChart( {
+                    selector: _canvas  
+                    , nickName: MChart.NickNames.HISTOGRAM /* view会根据传入的图表别名进行区别初始化，图表应该保证别名的唯一性 */
+                } );
             } );
         }
 
-        , initCanvasEvent: function() {
+        , initCanvasEvent: function( _canvas, _facade ) {
 
             var _p = this
                 , _isPointerType
                 , _moseDownPoint = null
                 , _swipeUpOrDown = null
-                , _canvas = this.canvas()
                 , dragPointList= [];
 
             _canvas.on( 'touchstart MSPointerDown pointerdown', function( _evt ) {
 
                 if( ( _isPointerType = _p.isPointerEventType( _evt, 'down' ) ) &&
-                  !isPrimaryTouch( _evt ) ) return
+                  !isPrimaryTouch( _evt ) ) return;
+
                 var _touch = _isPointerType ? _evt : _evt.touches[ 0 ];
 
                 _moseDownPoint = {
@@ -42,7 +52,7 @@
                     , y: _touch.pageY
                 }
 
-                _p.facade.sendNotification( 
+                _facade.sendNotification( 
                     MChart.NotificationNames.INNER_VIEW_MOUSEDOWN
                     , {
                         evt: _evt
@@ -87,7 +97,7 @@
 
                     _evt.preventDefault();
 
-                    _p.facade.sendNotification( 
+                    _facade.sendNotification( 
                         MChart.NotificationNames.INNER_VIEW_DRAG
                         , {
                             evt: _evt 
@@ -101,7 +111,7 @@
                     }
                 } else {
                     if( _beforeDir !== _swipeUpOrDown ) {
-                        _p.facade.sendNotification( 
+                        _facade.sendNotification( 
                             MChart.NotificationNames.INNER_VIEW_BACK
                             , {
                                 evt: _evt 
@@ -122,7 +132,7 @@
                 }
 
                 if( !_swipeUpOrDown ) {
-                    _p.facade.sendNotification( 
+                    _facade.sendNotification( 
                         MChart.NotificationNames.INNER_VIEW_SLIDE
                         , {
                             evt: _evt 
